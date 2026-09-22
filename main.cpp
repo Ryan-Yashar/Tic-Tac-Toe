@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <limits>
 
 using namespace std;
 //takes 4-digit hexadecimal and prints a utf-16 char (4-digit hexadecimal)
@@ -32,11 +33,12 @@ int vsPlayer() {
       cout << letter[player];
       cout << ", using format a,b (no space): ";
       cin.get(userInput, 4);
-      if (userInput[1] != ',' || userInput[3] != '\0' || gameBoard[2*userInput[0]-1][2*userInput[2]-1] != 0x0020) {
+      if ((userInput[1] != ',' || userInput[3] != '\0') || (gameBoard[2*(userInput[0]-'0')-1][2*(userInput[2]-'0')-1] != 0x0020) || ((userInput[0]-'0' < 1 || userInput[0]-'0' > 3) || (userInput[2]-'0' < 1 || userInput[2]-'0' > 3))) {
         cout << "Invalid input. Try again.\n";
-	cin.get();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
       } else {
-        gameBoard[2*userInput[0]-1][2*userInput[2]-1] = letter[player];
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        gameBoard[2*(userInput[0]-'0')-1][2*(userInput[2]-'0')-1] = letter[player];
         break;
       }
     }
